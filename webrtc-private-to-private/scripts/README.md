@@ -15,6 +15,9 @@ All machines should be running Ubuntu (e.g., on AWS EC2).
 
 ### 1. Set Up the Relay (Rust):
 - Launch an EC2 Ubuntu instance for the relay.
+  💡 To ensure the relay's IP address doesn’t change on reboot, [associate a static Elastic IP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
+ with your instance.
+  🔐 Make sure to [open security group incoming TCP connections](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html#adding-security-group-rule) for the required ports (4884, 8080, 8081).
 - Install Rust (if not already).
 - Clone the libp2p Rust repository:
   ```sh
@@ -33,7 +36,13 @@ All machines should be running Ubuntu (e.g., on AWS EC2).
   ```sh
   Listening on /ip4/127.0.0.1/tcp/8080/ws/p2p/12D3KooWDpJ7As7BWAwRMfu1VU2WCqNjvq387JEYKDBj4kx6nXTN
   ```
-  Important: Replace 127.0.0.1 in the multiaddress with the public IP address of your EC2 machine to share it with the private peers. for example if the public IP address is 34.201.123.45:
+  To share this address with peers, replace 127.0.0.1 with your EC2 instance's public IP. You can find it:
+  In the EC2 Console under "Instances" → "Public IPv4 address"
+  Or from the command line on the instance:
+  ```sh
+  curl http://checkip.amazonaws.com
+  ```
+  For example, if the public IP address is 34.201.123.45, the full multiaddress will be:
   ```sh
   /ip4/34.201.123.45/tcp/8080/ws/p2p/12D3KooWDpJ7As7BWAwRMfu1VU2WCqNjvq387JEYKDBj4kx6nXTN
   ```
