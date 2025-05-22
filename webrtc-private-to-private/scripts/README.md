@@ -56,9 +56,7 @@ with your instance.
 Open the following inbound rule in your EC2 instance’s security group:
 
 | Type       | Protocol | Port Range | Source    |
-
 | ---------- | -------- | ---------- | --------- |
-
 | Custom TCP | TCP      | 5173       | 0.0.0.0/0 |
 
 - Connect to the instance via SSH and install Git + Node.js (if not already installed):
