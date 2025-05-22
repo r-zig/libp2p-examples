@@ -18,7 +18,7 @@ All machines should be running Ubuntu (e.g., on AWS EC2).
 - Install Rust (if not already).
 - Clone the libp2p Rust repository:
   ```sh
-  git clone https://github.com/libp2p/rust-libp2p.git
+  git clone https://github.com/libp2p/rust-libp2p.git &&
   cd rust-libp2p/examples/relay-server/
   ```
 - Run the relay server with WebSocket and WebRTC support:
