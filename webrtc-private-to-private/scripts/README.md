@@ -47,3 +47,28 @@ All machines should be running Ubuntu (e.g., on AWS EC2).
   /ip4/34.201.123.45/tcp/8080/ws/p2p/12D3KooWDpJ7As7BWAwRMfu1VU2WCqNjvq387JEYKDBj4kx6nXTN
   ```
   This gives you a deterministic and reusable multiaddress that can be shared with peers running on other machines.
+
+  ### 2. Set Up the web server for the Private Peers (JavaScript – Web Server)
+  - Launch a second EC2 Ubuntu instance to act as a browser-accessible web server with the js peer-to-peer example.
+  💡 To ensure the web server's IP address doesn’t change on reboot, [associate a static Elastic IP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
+ with your instance.
+  🔐 Make sure to [open security group incoming TCP connections](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html#adding-security-group-rule) for the required port 5173 — this is the port the Vite dev server listens on.
+  Open the following inbound rule in your EC2 instance’s security group:
+  | Type       | Protocol | Port Range | Source    |
+  | ---------- | -------- | ---------- | --------- |
+  | Custom TCP | TCP      | 5173       | 0.0.0.0/0 |
+  - Connect to the instance via SSH and install Git + Node.js (if not already installed):
+  - Clone the example JavaScript peer:
+  ```sh
+  git clone https://github.com/libp2p/js-libp2p-example-webrtc-private-to-private.git &&
+  cd js-libp2p-example-webrtc-private-to-private
+  ```
+  - Make sure the dev server binds to all network interfaces. Open package.json and verify that the start script is:
+  ```sh
+  "start": "vite --host 0.0.0.0"
+  ```
+  - Follow the [official instructions](https://github.com/libp2p/js-libp2p-example-webrtc-private-to-private/tree/main?tab=readme-ov-file#running-the-clients) to run the client
+  - Your browser peer will now be accessible via:
+  ```sh
+  http://<public-ip>:5173
+  ```
