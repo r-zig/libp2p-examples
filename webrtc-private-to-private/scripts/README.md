@@ -74,3 +74,40 @@ cd js-libp2p-example-webrtc-private-to-private
 ```sh
 http://<public-ip>:5173
 ```
+
+### 3. Start the First Private Peer (Listener)
+Use a third machine — either a local computer or a cloud instance — to run the first private peer, which will act as the listener.
+
+✅ Make sure the machine is behind a NAT (e.g., home network or VPN). You can optionally test NAT traversal more strictly by routing this machine through VPN
+
+- In your browser on this machine, open the web interface served by the peer you set up in Section 2 (the web server):
+```sh
+http://<web-server-public-ip>:5173
+```
+- In the UI:
+
+Locate the “Remote multiaddress” field.
+
+Paste the multiaddress of the relay (from Section 1), for example:
+```sh
+/ip4/<relay-ip>/tcp/8080/ws/p2p/<relay-peer-id>
+```
+and press connect
+- Once the listener peer connects to the relay, it will print a listening multiaddress that looks like this:
+```sh
+/ip4/<relay-ip>/tcp/8080/ws/p2p/<relay-peer-id>/p2p-circuit/p2p/<listener-peer-id>
+```
+- Copy this full multiaddress — you'll need it for the next step (the dialer peer) to connect.
+### 4. Start the Second Private Peer (Dialer)
+- On a fourth machine (or reuse another NATed/VPN machine), open a browser to run the second private peer, which will act as the dialer.
+- Visit the same URL as before — the web server hosted on the first peer (from Section 2):
+```sh
+http://<web-server-public-ip>:5173
+```
+- In the UI:
+Paste the multiaddress of the listener (from Section 3), for example:
+```sh
+/ip4/<relay-ip>/tcp/8080/ws/p2p/<relay-peer-id>/p2p-circuit/p2p/<listener-peer-id>
+```
+- Click “Connect” to initiate the connection.
+- Once connected, you can start chatting directly between the two peers using the UI.
