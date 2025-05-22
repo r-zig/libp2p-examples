@@ -54,9 +54,13 @@ All machines should be running Ubuntu (e.g., on AWS EC2).
 with your instance.
 🔐 Make sure to [open security group incoming TCP connections](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html#adding-security-group-rule) for the required port 5173 — this is the port the Vite dev server listens on.
 Open the following inbound rule in your EC2 instance’s security group:
+
 | Type       | Protocol | Port Range | Source    |
+
 | ---------- | -------- | ---------- | --------- |
+
 | Custom TCP | TCP      | 5173       | 0.0.0.0/0 |
+
 - Connect to the instance via SSH and install Git + Node.js (if not already installed):
 - Clone the example JavaScript peer:
 ```sh
